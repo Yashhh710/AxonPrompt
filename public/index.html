@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AxonPrompt | Advanced AI Prompt Engineer</title>
+    <meta name="description" content="Build high-quality AI prompts with AxonPrompt's guided flow and AI-driven intelligence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body class="dark-mode">
+    <!-- Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="grid-overlay"></div>
+
+    <div id="app-container">
+        <!-- Disclaimer Screen -->
+        <section id="disclaimer-screen" class="screen active">
+            <div class="glass-card central-card">
+                <div class="icon-header">
+                    <div class="pulse-icon">⚠️</div>
+                </div>
+                <h1>AxonPrompt</h1>
+                <p class="subtitle">AI Prompt Engineering Reimagined</p>
+                <div class="disclaimer-content">
+                    <p>This tool helps generate AI prompts using advanced logic and the GROQ API. Results may vary based on user input and AI models. Use responsibly and verify outputs before implementation.</p>
+                </div>
+                <button id="start-btn" class="primary-btn">
+                    <span>Start Your Journey</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Flow Container (Visible after disclaimer) -->
+        <main id="main-flow" class="hidden">
+            <!-- Sidebar Navigation (Tree UI) -->
+            <aside id="sidebar">
+                <div class="sidebar-controls">
+                    <button id="toggle-sidebar" class="sidebar-toggle-internal" title="Collapse Sidebar">
+                        <i class="fas fa-bars"></i>
+                        <span>Hide Sidebar</span>
+                    </button>
+                </div>
+                <div class="sidebar-header">
+                    <div class="logo">Axon<span>Prompt</span></div>
+                </div>
+                <div class="category-tree-container" id="categories-section">
+                    <div class="categories-header">
+                        <h3>CATEGORIES</h3>
+                        <button id="hide-categories" class="icon-btn" title="Hide Categories">×</button>
+                    </div>
+                    <ul id="category-tree" class="tree">
+                        <!-- Dynamic Tree will be injected here -->
+                    </ul>
+                </div>
+                <div class="sidebar-footer">
+                    <div class="selection-path" id="current-path">
+                        <span>Select a category</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <div id="content-area">
+                <nav class="top-nav">
+                    <button id="floating-sidebar-trigger" class="secondary-btn icon-btn-text hidden" title="Open Sidebar">
+                        <i class="fas fa-bars"></i>
+                        <span>Show Sidebar</span>
+                    </button>
+                    <button id="back-btn" class="secondary-btn icon-btn-text hidden">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="main-progress"></div>
+                    </div>
+                    <div class="step-indicator" id="step-text">Step 1 of 5</div>
+                </nav>
+
+                <!-- Step 1: User Goal Input -->
+                <section id="input-step" class="flow-step active">
+                    <div class="step-header">
+                        <h2>What are we creating today?</h2>
+                        <p>Describe your goal in a few sentences. AI will help refine it.</p>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="user-goal" placeholder="e.g., A blog post about quantum computing for kids, or a Python script for web scraping..."></textarea>
+                        <div class="input-actions">
+                            <button id="next-to-mode" class="primary-btn large" disabled>
+                                <span>Continue</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="examples-grid">
+                        <div class="example-chip">Create a workout plan</div>
+                        <div class="example-chip">Write a sci-fi short story</div>
+                        <div class="example-chip">Analyze sales data</div>
+                        <div class="example-chip">Build a landing page</div>
+                    </div>
+                </section>
+
+                <!-- Step 2: Mode Selection -->
+                <section id="mode-step" class="flow-step">
+                    <div class="step-header">
+                        <h2>Choose Your Path</h2>
+                        <p>How would you like to refine your prompt?</p>
+                    </div>
+                    <div class="mode-options">
+                        <div class="mode-card glass-card" id="mode-guided">
+                            <div class="mode-icon">🎯</div>
+                            <h3>Guided Mode</h3>
+                            <p>AI will ask you specific questions to perfect the details.</p>
+                            <span class="badge">Recommended</span>
+                        </div>
+                        <div class="mode-card glass-card" id="mode-custom">
+                            <div class="mode-icon">⌨️</div>
+                            <h3>Custom Mode</h3>
+                            <p>Type your own instructions for tone, style, and format.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 3: Custom Instructions -->
+                <section id="custom-step" class="flow-step">
+                    <div class="step-header">
+                        <h2>Custom Instructions</h2>
+                        <p>Describe how you want the output (tone, style, format, audience, etc.)</p>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="custom-instructions" placeholder="e.g., Make it funny and short, use a professional tone with examples..."></textarea>
+                        <div class="input-actions">
+                            <button id="next-to-final-from-custom" class="primary-btn large">
+                                <span>Generate Prompts</span>
+                                <div class="loader hidden"></div>
+                            </button>
+                            <button id="hybrid-refine-btn" class="secondary-btn">
+                                <span>Refine Further with AI</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 4: Smart Questions (Guided) -->
+                <section id="questions-step" class="flow-step">
+                    <div class="step-header">
+                        <h2>Refining Intent</h2>
+                        <p id="question-count-text">Question 1 of 3</p>
+                    </div>
+                    
+                    <div id="question-container" class="glass-card question-card">
+                        <h3 id="current-question-text">Target Audience?</h3>
+                        <div id="options-grid" class="options-grid">
+                            <!-- Options injected here -->
+                        </div>
+                    </div>
+
+                    <div id="ai-suggestion" class="suggestion-box">
+                        <div class="suggestion-icon">💡</div>
+                        <p id="suggestion-text">Tip: Specifying your audience helps the AI adjust the reading level and tone.</p>
+                    </div>
+                </section>
+
+                <!-- Step 3: Final Output -->
+                <section id="output-step" class="flow-step">
+                    <div class="step-header">
+                        <h2>Your Engineering Results</h2>
+                        <p>Three levels of precision for your project.</p>
+                    </div>
+
+                    <div class="output-grid">
+                        <!-- Basic Prompt -->
+                        <div class="output-card glass-card" data-level="basic">
+                            <div class="card-badge">Level 1: Basic</div>
+                            <div class="prompt-content" id="prompt-basic"></div>
+                            <div class="card-actions">
+                                <button class="copy-btn" data-target="prompt-basic">Copy</button>
+                                <button class="edit-btn">Edit</button>
+                            </div>
+                        </div>
+
+                        <!-- Improved Prompt -->
+                        <div class="output-card glass-card featured" data-level="improved">
+                            <div class="card-badge">Level 2: Improved</div>
+                            <div class="prompt-content" id="prompt-improved"></div>
+                            <div class="card-actions">
+                                <button class="copy-btn" data-target="prompt-improved">Copy</button>
+                                <button class="edit-btn">Edit</button>
+                            </div>
+                        </div>
+
+                        <!-- Expert Prompt -->
+                        <div class="output-card glass-card" data-level="expert">
+                            <div class="card-badge">Level 3: Expert</div>
+                            <div class="prompt-content" id="prompt-expert"></div>
+                            <div class="card-actions">
+                                <button class="copy-btn" data-target="prompt-expert">Copy</button>
+                                <button class="edit-btn">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="final-actions">
+                        <button id="restart-btn" class="secondary-btn">Start Over</button>
+                        <button id="save-btn" class="primary-btn">Save to History</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="hidden">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
