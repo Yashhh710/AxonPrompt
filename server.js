@@ -18,7 +18,7 @@ const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 app.post('/api/chat', async (req, res) => {
     try {
-        const { messages, model = "llama-3.3-70b-versatile" } = req.body;
+        const { messages, model = "openai/gpt-oss-120b" } = req.body;
         
         const response = await axios.post(GROQ_API_URL, {
             model,
